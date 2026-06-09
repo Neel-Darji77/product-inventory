@@ -7,7 +7,11 @@ import dotenv from "dotenv/config";
 const app = express();
 const PORT = 3000;
 
-app.use(cors());
+app.use(cors({
+  origin: process.env.NODE_ENV === "production"
+    ? process.env.CLIENT_URL
+    : "http://localhost:5173"
+}));
 app.use(express.json());
 
 
