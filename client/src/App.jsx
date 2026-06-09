@@ -15,7 +15,7 @@ function App() {
 
   async function fetchStats() {
     let res = await fetch(`${BASE_URL}api/products/stats`);
-    let statsData = await response.json();
+    let statsData = await res.json();
     setStats(statsData);
   }
 
