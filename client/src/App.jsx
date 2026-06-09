@@ -3,6 +3,7 @@ import AddProductForm from "./components/AddProductForm"
 import FilterBar from "./components/FilterBar"
 import ProductCard from "./components/ProductCard"
 import StatsBar from "./components/StatsBar"
+import BASE_URL from "../config";
 
 function App() {
   const [products, setProducts] = useState([]);
@@ -10,16 +11,17 @@ function App() {
   const [search, setSearch] = useState("");
   const [category, setCategory] = useState("all");
   const [loading, setLoading] = useState(true);
-  const [error, setError] = useState(null);
+  const [error, setError] = useState(null); 
 
   async function fetchStats() {
-    let response = await fetch("http://localhost:3000/api/products/stats");
+    let res = await fetch(`${BASE_URL}/api/products/stats`);
     let statsData = await response.json();
     setStats(statsData);
   }
 
   async function fetchProducts() {
-    let res = await fetch("http://localhost:3000/api/products");
+    // let res = await fetch("http://localhost:3000/api/products");
+    let res = await fetch(`${BASE_URL}/api/products`);
     let productsData = await res.json();
     setProducts(productsData);
   }
@@ -43,7 +45,7 @@ function App() {
   }, [])
 
   async function handleAdd(name, price, category, stock) {
-    let res = await fetch("http://localhost:3000/api/products", {
+    let res = await fetch(`${BASE_URL}/api/products`, {
       method: "POST",
       headers: { "Content-Type": "application/json" },
       body: JSON.stringify({ name, price: Number(price), category, stock: Number(stock) })
@@ -55,14 +57,14 @@ function App() {
   }
 
   async function handleDelete(id) {
-    let response = await fetch(`http://localhost:3000/api/products/${id}`, { method: "DELETE" });
+    let response = await fetch(`${BASE_URL}/api/products/${id}`, { method: "DELETE" });
     setProducts(products.filter((p) => p._id !== id));
 
     fetchStats();
   }
 
   async function handleStockUpdate(id, stock) {
-    let response = await fetch(`http://localhost:3000/api/products/${id}/stock`, {
+    let response = await fetch(`${BASE_URL}/api/products/${id}/stock`, {
       method: "PATCH",
       headers: { "Content-Type": "application/json" },
       body: JSON.stringify({ stock })
