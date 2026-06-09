@@ -35,7 +35,7 @@ function App() {
 
         await fetchStats();
       } catch (error) {
-        setError("Failed to load data");
+        setError(`Failed to load data ${eror}`);
       } finally {
         setLoading(false);
       }
