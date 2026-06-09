@@ -3,7 +3,7 @@ import AddProductForm from "./components/AddProductForm"
 import FilterBar from "./components/FilterBar"
 import ProductCard from "./components/ProductCard"
 import StatsBar from "./components/StatsBar"
-import BASE_URL from "../config";
+import BASE_URL from "./config.js";
 
 function App() {
   const [products, setProducts] = useState([]);
