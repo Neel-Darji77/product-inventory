@@ -1,50 +1,124 @@
-import { useRef, useState } from "react"
+import { useRef, useState } from "react";
+import { Plus } from "lucide-react";
 
 function AddProductForm({ onAdd }) {
+  const [error, setError] = useState("");
 
-    const [error, setError] = useState("");
+  const nameRef = useRef(null);
+  const priceRef = useRef(null);
+  const categoryRef = useRef(null);
+  const stockRef = useRef(null);
 
-    const nameRef = useRef(null);
-    const priceRef = useRef(0);
-    const categoryRef = useRef(null);
-    const stockRef = useRef(0);
+  function handleSubmit(e) {
+    e.preventDefault();
 
-    function handleSubmit(e){
-        e.preventDefault();
-        let name = nameRef.current.value;
-        let price = priceRef.current.value;
-        let category = categoryRef.current.value;
-        let stock = stockRef.current.value;
+    const name = nameRef.current.value;
+    const price = priceRef.current.value;
+    const category = categoryRef.current.value;
+    const stock = stockRef.current.value;
 
-        if( name.trim() === "" || category.trim() === "" || isNaN(price) || isNaN(stock) || price < 0 || stock < 0){
-            setError("Enter valid product's description.")
-            return;
-        }
-        onAdd(name, price, category, stock);
-
-        nameRef.current.value = "";
-        priceRef.current.value = "";
-        categoryRef.current.value = "";
-        stockRef.current.value = "";
-        setError("");
+    if (
+      name.trim() === "" ||
+      category.trim() === "" ||
+      isNaN(price) ||
+      isNaN(stock) ||
+      Number(price) < 0 ||
+      Number(stock) < 0
+    ) {
+      setError("Please enter valid product details.");
+      return;
     }
 
-    return (
-        <>
-            <form  onSubmit={handleSubmit}>
-                <label htmlFor="name">Name : </label>
-                <input type="text" ref={nameRef} name="name" placeholder="Enter Product Name"/>
-                <label htmlFor="price" style={{marginLeft:"4%"}}>Price : </label>
-                <input type="number" ref={priceRef} name="price" placeholder="Enter Price"/>
-                <label htmlFor="category" style={{marginLeft:"4%"}}>Category : </label>
-                <input type="text" ref={categoryRef} name="category" placeholder="Enter Category"/>
-                <label htmlFor="stock" style={{marginLeft:"4%"}}>Stock : </label>
-                <input type="number" ref={stockRef} name="stock" placeholder="Number of item of product which you have"/>
-                <button type="submit" style={{marginLeft:"4%"}}>Add</button>
-                {error && <p style={{color:"red"}}>{error}</p>}
-            </form>
-        </>
-    )
+    onAdd(name, price, category, stock);
+
+    nameRef.current.value = "";
+    priceRef.current.value = "";
+    categoryRef.current.value = "";
+    stockRef.current.value = "";
+
+    setError("");
+  }
+
+  return (
+    <div className="bg-white border border-gray-200 rounded-2xl shadow-sm p-5">
+      <div className="mb-5">
+        <h2 className="text-xl font-semibold text-gray-900">
+          Add New Product
+        </h2>
+        <p className="text-sm text-gray-500 mt-1">
+          Quickly add a new product to your inventory.
+        </p>
+      </div>
+
+      <form
+        onSubmit={handleSubmit}
+        className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-5 gap-4"
+      >
+        <div>
+          <label className="block text-xs font-semibold uppercase tracking-wide text-gray-500 mb-2">
+            Product Name
+          </label>
+          <input
+            ref={nameRef}
+            type="text"
+            placeholder="MacBook Air"
+            className="w-full h-10 px-3 rounded-lg border border-gray-200 focus:outline-none focus:ring-2 focus:ring-green-500 text-sm"
+          />
+        </div>
+        <div>
+          <label className="block text-xs font-semibold uppercase tracking-wide text-gray-500 mb-2">
+            Price
+          </label>
+          <input
+            ref={priceRef}
+            type="number"
+            placeholder="45000"
+            className="w-full h-10 px-3 rounded-lg border border-gray-200 focus:outline-none focus:ring-2 focus:ring-green-500 text-sm"
+          />
+        </div>
+        <div>
+          <label className="block text-xs font-semibold uppercase tracking-wide text-gray-500 mb-2">
+            Category
+          </label>
+          <select
+            ref={categoryRef}
+            className="w-full h-10 px-3 rounded-lg border border-gray-200 bg-white focus:outline-none focus:ring-2 focus:ring-green-500 text-sm"
+          >
+            <option value="">Select</option>
+            <option value="Electronics">Electronics</option>
+            <option value="Stationery">Stationery</option>
+            <option value="Furniture">Furniture</option>
+          </select>
+        </div>
+        <div>
+          <label className="block text-xs font-semibold uppercase tracking-wide text-gray-500 mb-2">
+            Stock
+          </label>
+          <input
+            ref={stockRef}
+            type="number"
+            placeholder="20"
+            className="w-full h-10 px-3 rounded-lg border border-gray-200 focus:outline-none focus:ring-2 focus:ring-green-500 text-sm"
+          />
+        </div>
+        <div className="flex items-end">
+          <button
+            type="submit"
+            className="w-full h-10 rounded-lg bg-green-500 hover:bg-green-600 transition text-white text-sm font-medium flex items-center justify-center gap-2"
+          >
+            <Plus size={16} />
+            Add Product
+          </button>
+        </div>
+      </form>
+
+      {error && (
+        <p className="text-red-500 text-sm mt-4">
+          {error}
+        </p>
+      )}
+    </div>
+  );
 }
 
-export default AddProductForm
+export default AddProductForm;
