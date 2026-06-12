@@ -74,8 +74,17 @@ function App() {
     await fetchStats();
   }
 
-  if (loading) return <p>Loading...</p>;
-  if (error) return <p style={{ color: "red" }}>{error}</p>;
+  if (loading) return (
+    <div className="min-h-screen flex items-center justify-center">
+      <p className="text-gray-500 text-lg">Loading...</p>
+    </div>
+  );
+
+  if (error) return (
+    <div className="min-h-screen flex items-center justify-center">
+      <p className="text-red-500 text-lg">{error}</p>
+    </div>
+  );
 
   let filtered = products.filter(p => category === "all" || p.category === category)
     .filter(p => p.name.toLowerCase().includes(search.toLowerCase()));
