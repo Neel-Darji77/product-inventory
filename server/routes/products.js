@@ -16,7 +16,7 @@ router.get("/", async (req, res) => {
 
 function getTotalCategory(active) {
     return active.reduce((result, product) => {
-        result[product.category] = (result[product.category] || 0) + product.price;
+        result[product.category] = (result[product.category] || 0) + product.stock;
         return result;
     }, {});
 }
