@@ -1,8 +1,9 @@
 import express from 'express';
 import cors from 'cors';
-import productsRouter from './routes/products.js';
 import connectDB from './config/db.js';
 import dotenv from "dotenv/config";
+import productsRouter from './routes/products.js';
+import authRoutes from './routes/authRoutes.js';
 
 const app = express();
 const PORT = 3000;
@@ -24,6 +25,7 @@ async function startServer() {
 startServer()
 
 // connectDB();
+app.use("/api/auth", authRoutes);
 app.use("/api/products", productsRouter);
 
 app.use((req, res) => {

@@ -1,10 +1,19 @@
 import express from "express";
 // import { products, getNextId } from "../data/products.js";
 import Product from "../models/Product.js";
+import verifyToken from "../middlewares/verifyToken.js";
+import authorize from "../middlewares/authorise.js";
 
 const router = express.Router();
 
-router.get("/", async (req, res) => {
+router.get("/", 
+    verifyToken,
+    authorize(
+        ROLES.ADMIN,
+        ROLES.MANAGER,
+        ROLES.VIEWER
+    ),
+    async (req, res) => {
     // let active = products.filter(p => p.isActive);
     try { 
         const active = await Product.find({ isActive: true });
@@ -90,7 +99,10 @@ router.patch("/:id", async (req, res) => {
     }
 })
 
-router.patch("/:id/stock", async (req, res) => {
+router.patch("/:id/stock", 
+    verifyToken,
+    authorize(ROLES.ADMIN, ROLES.MANAGER),
+    async (req, res) => {
     try { 
         const { stock } = req.body;
         if (stock === undefined) {
@@ -118,7 +130,10 @@ router.patch("/:id/stock", async (req, res) => {
     }
 })
 
-router.delete("/:id", async (req, res) => {
+router.delete("/:id", 
+    verifyToken,
+    authorize(ROLES.ADMIN),
+    async (req, res) => {
     try { 
         
         // products[index].isActive = false;
