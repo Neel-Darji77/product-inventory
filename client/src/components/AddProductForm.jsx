@@ -1,123 +1,120 @@
 import { useRef, useState } from "react";
+import { motion } from "framer-motion";
 import { Plus } from "lucide-react";
 
 function AddProductForm({ onAdd }) {
   const [error, setError] = useState("");
+  const [loading, setLoading] = useState(false);
 
   const nameRef = useRef(null);
   const priceRef = useRef(null);
   const categoryRef = useRef(null);
   const stockRef = useRef(null);
 
-  function handleSubmit(e) {
+  async function handleSubmit(e) {
     e.preventDefault();
 
-    const name = nameRef.current.value;
-    const price = priceRef.current.value;
+    const name = nameRef.current.value.trim();
+    const price = Number(priceRef.current.value);
     const category = categoryRef.current.value;
-    const stock = stockRef.current.value;
+    const stock = Number(stockRef.current.value);
 
     if (
-      name.trim() === "" ||
-      category.trim() === "" ||
+      !name ||
+      !category ||
       isNaN(price) ||
       isNaN(stock) ||
-      Number(price) < 0 ||
-      Number(stock) < 0
+      price < 0 ||
+      stock < 0
     ) {
       setError("Please enter valid product details.");
       return;
     }
 
-    onAdd(name, price, category, stock);
+    setLoading(true);
+
+    await onAdd(name, price, category, stock);
 
     nameRef.current.value = "";
     priceRef.current.value = "";
     categoryRef.current.value = "";
     stockRef.current.value = "";
 
+    nameRef.current.focus();
+
+    setLoading(false);
     setError("");
   }
 
   return (
-    <div className="bg-white border border-gray-200 rounded-2xl shadow-sm p-5">
+    <motion.div
+      layout
+      className="bg-white rounded-2xl border border-gray-200 shadow-sm p-6"
+    >
       <div className="mb-5">
-        <h2 className="text-xl font-semibold text-gray-900">
+
+        <h2 className="text-lg font-semibold text-gray-900">
           Add New Product
         </h2>
+
         <p className="text-sm text-gray-500 mt-1">
-          Quickly add a new product to your inventory.
+          Create a new inventory item.
         </p>
+
       </div>
 
       <form
         onSubmit={handleSubmit}
-        className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-5 gap-4"
+        className="grid grid-cols-1 md:grid-cols-2 xl:grid-cols-5 gap-4"
       >
-        <div>
-          <label className="block text-xs font-semibold uppercase tracking-wide text-gray-500 mb-2">
-            Product Name
-          </label>
-          <input
-            ref={nameRef}
-            type="text"
-            placeholder="MacBook Air"
-            className="w-full h-10 px-3 rounded-lg border border-gray-200 focus:outline-none focus:ring-2 focus:ring-green-500 text-sm"
-          />
-        </div>
-        <div>
-          <label className="block text-xs font-semibold uppercase tracking-wide text-gray-500 mb-2">
-            Price
-          </label>
-          <input
-            ref={priceRef}
-            type="number"
-            placeholder="45000"
-            className="w-full h-10 px-3 rounded-lg border border-gray-200 focus:outline-none focus:ring-2 focus:ring-green-500 text-sm"
-          />
-        </div>
-        <div>
-          <label className="block text-xs font-semibold uppercase tracking-wide text-gray-500 mb-2">
-            Category
-          </label>
-          <select
-            ref={categoryRef}
-            className="w-full h-10 px-3 rounded-lg border border-gray-200 bg-white focus:outline-none focus:ring-2 focus:ring-green-500 text-sm"
-          >
-            <option value="">Select</option>
-            <option value="Electronics">Electronics</option>
-            <option value="Stationery">Stationery</option>
-            <option value="Furniture">Furniture</option>
-          </select>
-        </div>
-        <div>
-          <label className="block text-xs font-semibold uppercase tracking-wide text-gray-500 mb-2">
-            Stock
-          </label>
-          <input
-            ref={stockRef}
-            type="number"
-            placeholder="20"
-            className="w-full h-10 px-3 rounded-lg border border-gray-200 focus:outline-none focus:ring-2 focus:ring-green-500 text-sm"
-          />
-        </div>
-        <div className="flex items-end">
-          <button
-            type="submit"
-            className="w-full h-10 rounded-lg bg-green-500 hover:bg-green-600 transition text-white text-sm font-medium flex items-center justify-center gap-2"
-          >
-            <Plus size={16} />
-            Add Product
-          </button>
-        </div>
+        <input
+          ref={nameRef}
+          type="text"
+          placeholder="Product Name"
+          className="h-10 rounded-xl border border-gray-200 px-4 text-sm focus:outline-none focus:ring-2 focus:ring-green-500"
+        />
+
+        <input
+          ref={priceRef}
+          type="number"
+          placeholder="Price"
+          className="h-10 rounded-xl border border-gray-200 px-4 text-sm focus:outline-none focus:ring-2 focus:ring-green-500"
+        />
+
+        <select
+          ref={categoryRef}
+          className="h-10 rounded-xl border border-gray-200 px-4 text-sm focus:outline-none focus:ring-2 focus:ring-green-500 bg-white"
+        >
+          <option value="">Category</option>
+          <option value="Electronics">Electronics</option>
+          <option value="Furniture">Furniture</option>
+          <option value="Stationery">Stationery</option>
+        </select>
+
+        <input
+          ref={stockRef}
+          type="number"
+          placeholder="Stock"
+          className="h-10 rounded-xl border border-gray-200 px-4 text-sm focus:outline-none focus:ring-2 focus:ring-green-500"
+        />
+
+        <button
+          disabled={loading}
+          type="submit"
+          className="h-10 rounded-xl bg-green-500 hover:bg-green-600 disabled:bg-green-300 text-white text-sm font-medium flex items-center justify-center gap-2 transition active:scale-95"
+        >
+          <Plus size={16} />
+
+          {loading ? "Adding..." : "Add Product"}
+        </button>
       </form>
 
       {error && (
-        <p className="text-red-500 text-sm mt-4">
+        <p className="mt-4 text-sm text-red-500">
           {error}
         </p>
       )}
-    </div>
+    </motion.div>
   );
 }
 
