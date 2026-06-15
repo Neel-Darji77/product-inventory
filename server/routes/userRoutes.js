@@ -10,7 +10,7 @@ import {
 
 import { ROLES } from "../constants/roles.js";
 
-import authorize from "../middlewares/authorize.js";
+import authorize from "../middlewares/authorise.js";
 import verifyToken from "../middlewares/verifyToken.js";
 
 const router = express.Router();
