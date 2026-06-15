@@ -2,7 +2,7 @@ import express from "express";
 // import { products, getNextId } from "../data/products.js";
 import Product from "../models/Product.js";
 import verifyToken from "../middlewares/verifyToken.js";
-import authorize from "../middlewares/authorise.js";
+import authorize from "../middlewares/authorize.js";
 import { ROLES } from "../constants/roles.js";
 
 const router = express.Router();
