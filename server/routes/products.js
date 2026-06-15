@@ -7,8 +7,9 @@ import { ROLES } from "../constants/roles.js";
 
 const router = express.Router();
 
+router.use(verifyToken);
+
 router.get("/", 
-    verifyToken,
     authorize(
         ROLES.ADMIN,
         ROLES.MANAGER,
@@ -31,7 +32,9 @@ function getTotalCategory(active) {
     }, {});
 }
 
-router.get("/stats", async (req, res) => {
+router.get("/stats", 
+    authorize(ROLES.ADMIN, ROLES.MANAGER, ROLES.VIEWER),
+    async (req, res) => {
     // let active = products.filter(p => p.isActive);
 
     try { 
@@ -48,7 +51,9 @@ router.get("/stats", async (req, res) => {
     }
 })
 
-router.get("/:id", async (req, res) => {
+router.get("/:id", 
+    authorize(ROLES.ADMIN, ROLES.MANAGER, ROLES.VIEWER),
+    async (req, res) => {
     // let product = products.find(p => p.isActive && String(p.id) === req.params.id);
     try { 
         let product = await Product.findById(req.params.id);
@@ -61,7 +66,9 @@ router.get("/:id", async (req, res) => {
     }
 })
 
-router.post("/", async (req, res) => {
+router.post("/", 
+    authorize(ROLES.ADMIN, ROLES.MANAGER),
+    async (req, res) => {
     try { 
         let { name, price, category, stock } = req.body;
         let product = await Product.create({
@@ -79,7 +86,9 @@ router.post("/", async (req, res) => {
     }
 })
 
-router.patch("/:id", async (req, res) => {
+router.patch("/:id", 
+    authorize(ROLES.ADMIN, ROLES.MANAGER),
+    async (req, res) => {
     try { 
         const { name, price, category, stock } = req.body;
         const product = await Product.findByIdAndUpdate(
@@ -101,7 +110,6 @@ router.patch("/:id", async (req, res) => {
 })
 
 router.patch("/:id/stock", 
-    verifyToken,
     authorize(ROLES.ADMIN, ROLES.MANAGER),
     async (req, res) => {
     try { 
@@ -132,7 +140,6 @@ router.patch("/:id/stock",
 })
 
 router.delete("/:id", 
-    verifyToken,
     authorize(ROLES.ADMIN),
     async (req, res) => {
     try { 

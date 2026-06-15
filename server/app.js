@@ -4,6 +4,7 @@ import connectDB from './config/db.js';
 import dotenv from "dotenv/config";
 import productsRouter from './routes/products.js';
 import authRoutes from './routes/authRoutes.js';
+import userRoutes from './routes/userRoutes.js';
 
 const app = express();
 const PORT = 3000;
@@ -27,6 +28,7 @@ startServer()
 // connectDB();
 app.use("/api/auth", authRoutes);
 app.use("/api/products", productsRouter);
+app.use("/api/users", userRoutes);
 
 app.use((req, res) => {
   res.status(404).json({ error: `${req.method} ${req.url} not found` });
