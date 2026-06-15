@@ -13,7 +13,7 @@ import EmptyState from "../components/EmptyState";
 import DeleteModal from "../components/DeleteModel";
 import UpdateStockModal from "../components/UpdateStockModel";
 
-import BASE_URL from "../config";
+import api from "../utils/api";
 
 function Dashboard() {
   const [products, setProducts] = useState([]);
@@ -27,14 +27,12 @@ function Dashboard() {
   const [updateOpen, setUpdateOpen] = useState(false);
 
   async function fetchProducts() {
-    const response = await fetch(`${BASE_URL}api/products`);
-    const data = await response.json();
+    const data = await api("api/products");
     setProducts(data);
   }
 
   async function fetchStats() {
-    const response = await fetch(`${BASE_URL}api/products/stats`);
-    const data = await response.json();
+    const data = await api("api/products/stats");
     setStats(data);
   }
 
@@ -59,25 +57,18 @@ function Dashboard() {
 
   async function handleAdd(name, price, category, stock) {
     try {
-      const response = await fetch(
-        `${BASE_URL}api/products`,
-        {
-          method: "POST",
-          headers: {
-            "Content-Type": "application/json",
-          },
-          body: JSON.stringify({
-            name,
-            price: Number(price),
-            category,
-            stock: Number(stock),
-          }),
-        }
-      );
-      const newProduct = await response.json();
+      const newProduct = await api("api/products", {
+        method: "POST",
+        body: JSON.stringify({
+          name,
+          price: Number(price),
+          category,
+          stock: Number(stock),
+        }),
+      });
 
       setProducts((previous) => [...previous, newProduct.data]);
-      fetchStats();
+      await fetchStats();
 
       toast.success("Product Added");
     } catch {
@@ -87,12 +78,9 @@ function Dashboard() {
 
   async function handleDelete(id) {
     try {
-      await fetch(
-        `${BASE_URL}api/products/${id}`,
-        {
-          method: "DELETE",
-        }
-      );
+      await api(`api/products/${id}`, {
+        method: "DELETE",
+      });
 
       setProducts((previous) =>
         previous.filter(
@@ -100,7 +88,7 @@ function Dashboard() {
         )
       );
 
-      fetchStats();
+      await fetchStats();
       toast.success("Product Deleted");
     } catch {
       toast.error("Delete failed");
@@ -109,18 +97,12 @@ function Dashboard() {
 
   async function handleUpdateStock(id, stock) {
     try {
-      await fetch(
-        `${BASE_URL}api/products/${id}/stock`,
-        {
-          method: "PATCH",
-          headers: {
-            "Content-Type": "application/json",
-          },
-          body: JSON.stringify({
-            stock,
-          }),
-        }
-      );
+      await api(`api/products/${id}/stock`, {
+        method: "PATCH",
+        body: JSON.stringify({
+          stock,
+        }),
+      });
 
       await fetchProducts();
       await fetchStats();
