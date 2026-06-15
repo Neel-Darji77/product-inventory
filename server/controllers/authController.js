@@ -36,7 +36,7 @@ export const login = async (req, res) => {
         }
         const user = await User.findOne({
             email: email.toLowerCase()
-        });
+        }).select("+password");
         if (!user) {
             return res.status(401).json({
                 success: false,
