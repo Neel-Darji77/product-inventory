@@ -3,14 +3,23 @@ import User from "../models/User.js";
 
 export const getDashboardAnalytics = async (req, res) => {
     try {
-        const totalProducts = await Product.countDocuments();
-        const totalUsers = await User.countDocuments();
-        const lowStockProducts = await Product.countDocuments({
+        const activeProductsQuery = {
+            isActive: true
+        };
+        const lowStockQuery = {
+            ...activeProductsQuery,
             stock: {
-                $lte: 10
+                $lte: 5
             }
-        });
+        };
+
+        const totalProducts = await Product.countDocuments(activeProductsQuery);
+        const totalUsers = await User.countDocuments();
+        const lowStockProducts = await Product.countDocuments(lowStockQuery);
         const categories = await Product.aggregate([
+            {
+                $match: activeProductsQuery
+            },
             {
                 $group: {
                     _id: "$category",
@@ -25,11 +34,7 @@ export const getDashboardAnalytics = async (req, res) => {
                 }
             }
         ]);
-        const lowStockItems = await Product.find({
-            stock: {
-                $lte: 10
-            }
-        })
+        const lowStockItems = await Product.find(lowStockQuery)
             .select("name stock category")
             .sort({
                 stock: 1

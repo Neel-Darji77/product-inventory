@@ -1,4 +1,4 @@
-import { useEffect, useMemo, useState } from "react";
+import { useCallback, useEffect, useMemo, useState } from "react";
 import { AnimatePresence, motion } from "framer-motion";
 import { Toaster, toast } from "react-hot-toast";
 
@@ -26,17 +26,17 @@ function Dashboard() {
   const [deleteOpen, setDeleteOpen] = useState(false);
   const [updateOpen, setUpdateOpen] = useState(false);
 
-  async function fetchProducts() {
+  const fetchProducts = useCallback(async () => {
     const data = await api("api/products");
     setProducts(data);
-  }
+  }, []);
 
-  async function fetchStats() {
+  const fetchStats = useCallback(async () => {
     const data = await api("api/products/stats");
     setStats(data);
-  }
+  }, []);
 
-  async function loadDashboard() {
+  const loadDashboard = useCallback(async () => {
     try {
       setLoading(true);
       setError("");
@@ -44,16 +44,16 @@ function Dashboard() {
         fetchProducts(),
         fetchStats(),
       ]);
-    } catch (err) {
+    } catch {
       setError("Unable to load products.");
     } finally {
       setLoading(false);
     }
-  }
+  }, [fetchProducts, fetchStats]);
 
   useEffect(() => {
     loadDashboard();
-  }, []);
+  }, [loadDashboard]);
 
   async function handleAdd(name, price, category, stock) {
     try {
@@ -201,6 +201,7 @@ function Dashboard() {
             onSearch={setSearch}
             category={category}
             onCategory={setCategory}
+            totalProducts={products.length}
           />
         </div>
 

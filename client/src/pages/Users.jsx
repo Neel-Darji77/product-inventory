@@ -4,7 +4,6 @@ import toast from "react-hot-toast";
 import CreateUserModal from "../components/CreateUserModel.jsx";
 
 import {
-    createUser,
     deleteUser,
     getUsers,
     toggleUserStatus,

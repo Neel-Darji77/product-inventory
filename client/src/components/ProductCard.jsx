@@ -61,16 +61,6 @@ function ProductCard({
   const status = getStatus();
   const StatusIcon = status.icon;
 
-  function updateStock() {
-    const value = Number(
-      prompt(`Enter new stock for ${product.name}`)
-    );
-
-    if (!isNaN(value) && value >= 0) {
-      onUpdateStock(product._id, value);
-    }
-  }
-
   return (
     <motion.div
       layout

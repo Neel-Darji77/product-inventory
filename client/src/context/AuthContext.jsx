@@ -1,4 +1,4 @@
-import { createContext, useContext, useEffect, useState } from "react";
+import { createContext, useCallback, useContext, useEffect, useState } from "react";
 import { getCurrentUser } from "../services/authService";
 
 const AuthContext = createContext(null);
@@ -16,15 +16,15 @@ function AuthProvider({ children }) {
         localStorage.setItem("user", JSON.stringify(userData));
     };
 
-    const logout = () => {
+    const logout = useCallback(() => {
         setUser(null);
         setToken(null);
 
         localStorage.removeItem("token");
         localStorage.removeItem("user");
-    };
+    }, []);
 
-    const initializeAuth = async () => {
+    const initializeAuth = useCallback(async () => {
         try {
             const storedToken = localStorage.getItem("token");
 
@@ -37,16 +37,16 @@ function AuthProvider({ children }) {
 
             setUser(response.user);
             setToken(storedToken);
-        } catch (error) {
+        } catch {
             logout();
         } finally {
             setLoading(false);
         }
-    };
+    }, [logout]);
 
     useEffect(() => {
         initializeAuth();
-    }, []);
+    }, [initializeAuth]);
 
     const value = {
         user,

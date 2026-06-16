@@ -34,6 +34,11 @@ function App() {
                 />
 
                 <Route
+                    path="products"
+                    element={<Dashboard />}
+                />
+
+                <Route
                     path="users"
                     element={<Users />}
                 />
