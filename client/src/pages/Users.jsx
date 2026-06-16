@@ -137,10 +137,10 @@ const Users = () => {
 
             <div className="flex flex-col gap-4 lg:flex-row lg:items-center lg:justify-between">
                 <div>
-                    <h1 className="text-3xl font-bold text-gray-900">
+                    <h1 className="text-3xl font-bold text-gray-900 dark:text-slate-100">
                         User Management
                     </h1>
-                    <p className="mt-1 text-gray-500">
+                    <p className="mt-1 text-gray-500 dark:text-slate-400">
                         Manage administrators, managers and viewers
                     </p>
                 </div>
@@ -151,7 +151,7 @@ const Users = () => {
                     + Add User
                 </button>
             </div>
-            <div className="rounded-2xl border border-gray-200 bg-white p-5 shadow-sm">
+            <div className="rounded-2xl border border-gray-200 bg-white p-5 shadow-sm dark:bg-slate-900 dark:border-slate-800">
                 <div className="flex flex-col gap-4 md:flex-row md:items-center md:justify-between">
                     <input
                         type="text"
@@ -160,17 +160,17 @@ const Users = () => {
                         onChange={(event) =>
                             setSearch(event.target.value)
                         }
-                        className="w-full rounded-xl border border-gray-300 px-4 py-3 outline-none transition focus:border-green-600 md:max-w-sm"
+                        className="w-full rounded-xl border border-gray-300 dark:border-slate-700 bg-white dark:bg-slate-800 dark:text-slate-100 px-4 py-3 outline-none transition focus:border-green-600 md:max-w-sm"
                     />
-                    <div className="text-sm text-gray-500">
+                    <div className="text-sm text-gray-500 dark:text-slate-400">
                         Total Users
-                        <span className="ml-2 rounded-lg bg-green-100 px-3 py-1 font-semibold text-green-700">
+                        <span className="ml-2 rounded-lg bg-green-100 dark:bg-green-950/40 px-3 py-1 font-semibold text-green-700 dark:text-green-400">
                             {filteredUsers.length}
                         </span>
                     </div>
                 </div>
             </div>
-            <div className="overflow-hidden rounded-2xl border border-gray-200 bg-white shadow-sm">
+            <div className="overflow-hidden rounded-2xl border border-gray-200 dark:border-slate-800 bg-white dark:bg-slate-900 shadow-sm">
                 <table className="w-full">
                     <thead className="bg-gray-50">
                         <tr>
@@ -205,21 +205,21 @@ const Users = () => {
                         {filteredUsers.map((user) => (
                             <tr
                                 key={user._id}
-                                className="border-t transition hover:bg-gray-50"
+                                className="border-t border-gray-200 dark:border-slate-800 transition hover:bg-gray-50 dark:hover:bg-slate-800/40"
                             >
                                 <td className="px-6 py-4">
                                     <div className="flex items-center gap-3">
-                                        <div className="flex h-10 w-10 items-center justify-center rounded-full bg-green-100 font-semibold text-green-700">
+                                        <div className="flex h-10 w-10 items-center justify-center rounded-full bg-green-100 dark:bg-green-950/40 font-semibold text-green-700 dark:text-green-400">
                                             {user.name.charAt(0).toUpperCase()}
                                         </div>
                                         <div>
-                                            <p className="font-medium text-gray-900">
+                                            <p className="font-medium text-gray-900 dark:text-slate-100">
                                                 {user.name}
                                             </p>
                                         </div>
                                     </div>
                                 </td>
-                                <td className="px-6 py-4 text-gray-600">
+                                <td className="px-6 py-4 text-gray-600 dark:text-slate-400">
                                     {user.email}
                                 </td>
                                 <td className="px-6 py-4">
@@ -231,7 +231,7 @@ const Users = () => {
                                                 event.target.value
                                             )
                                         }
-                                        className="rounded-lg border border-gray-300 px-3 py-2 text-sm outline-none transition focus:border-green-600"
+                                        className="rounded-lg border border-gray-300 dark:border-slate-700 bg-white dark:bg-slate-800 dark:text-slate-100 px-3 py-2 text-sm outline-none transition focus:border-green-600 dark:focus:border-green-500"
                                     >
                                         <option value="admin">
                                             Admin
@@ -250,8 +250,8 @@ const Users = () => {
                                             handleToggleStatus(user._id)
                                         }
                                         className={`rounded-full px-4 py-2 text-xs font-semibold transition ${user.isActive
-                                                ? "bg-green-100 text-green-700 hover:bg-green-200"
-                                                : "bg-red-100 text-red-700 hover:bg-red-200"
+                                                ? "bg-green-100 text-green-700 hover:bg-green-200 dark:bg-green-950/40 dark:text-green-400"
+                                                : "bg-red-100 text-red-700 hover:bg-red-200 dark:bg-red-950/40 dark:text-red-400"
                                             }`}
                                     >
                                         {user.isActive

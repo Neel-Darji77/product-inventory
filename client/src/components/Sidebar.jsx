@@ -26,17 +26,17 @@ const Sidebar = () => {
     const navItemClass = ({ isActive }) =>
         `flex items-center gap-3 rounded-xl px-4 py-3 transition ${
             isActive
-                ? "bg-green-100 text-green-700"
-                : "text-gray-600 hover:bg-gray-100"
+                ? "bg-green-100 text-green-700 dark:bg-green-950 dark:text-green-400"
+                : "text-gray-600 hover:bg-gray-100 dark:text-slate-300 dark:hover:bg-slate-800"
         }`;
 
     return (
-        <aside className="flex h-screen w-72 flex-col border-r bg-white">
-            <div className="border-b p-6">
-                <h1 className="text-xl font-bold text-green-600 truncate animate-pulse-once" title={settings?.companyName}>
+        <aside className="flex h-screen w-72 flex-col border-r border-gray-200 bg-white dark:bg-slate-900 dark:border-slate-800">
+            <div className="border-b border-gray-200 p-6 dark:border-slate-800">
+                <h1 className="text-xl font-bold text-green-600 dark:text-green-400 truncate animate-pulse-once" title={settings?.companyName}>
                     {settings?.companyName || "Inventory"}
                 </h1>
-                <p className="mt-1 text-xs text-gray-500">
+                <p className="mt-1 text-xs text-gray-500 dark:text-slate-400">
                     Management System
                 </p>
             </div>
@@ -86,12 +86,12 @@ const Sidebar = () => {
                     </NavLink>
                 )}
             </nav>
-            <div className="border-t p-4">
+            <div className="border-t border-gray-200 p-4 dark:border-slate-800">
                 <div className="mb-4">
-                    <p className="font-semibold text-gray-800">
+                    <p className="font-semibold text-gray-800 dark:text-slate-200">
                         {user?.name}
                     </p>
-                    <p className="text-sm capitalize text-gray-500">
+                    <p className="text-sm capitalize text-gray-500 dark:text-slate-400">
                         {user?.role}
                     </p>
                 </div>

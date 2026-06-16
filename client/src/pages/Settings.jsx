@@ -66,10 +66,10 @@ const Settings = () => {
     return (
         <div className="mx-auto max-w-4xl space-y-8">
             <div>
-                <h1 className="text-3xl font-bold text-gray-900">
+                <h1 className="text-3xl font-bold text-gray-900 dark:text-slate-100">
                     Settings
                 </h1>
-                <p className="mt-2 text-gray-500">
+                <p className="mt-2 text-gray-500 dark:text-slate-400">
                     Manage your application preferences.
                 </p>
             </div>
@@ -77,8 +77,8 @@ const Settings = () => {
                 onSubmit={handleSubmit}
                 className="space-y-6"
             >
-                <div className="rounded-2xl border border-gray-200 bg-white p-6 shadow-sm">
-                    <label className="mb-2 block text-sm font-medium text-gray-700">
+                <div className="rounded-2xl border border-gray-200 bg-white p-6 shadow-sm dark:bg-slate-900 dark:border-slate-800">
+                    <label className="mb-2 block text-sm font-medium text-gray-700 dark:text-slate-300">
                         Company Name
                     </label>
                     <input
@@ -86,12 +86,12 @@ const Settings = () => {
                         name="companyName"
                         value={settings.companyName}
                         onChange={handleChange}
-                        className="w-full rounded-xl border border-gray-300 px-4 py-3 outline-none transition focus:border-green-600"
+                        className="w-full rounded-xl border border-gray-300 px-4 py-3 outline-none transition focus:border-green-600 dark:bg-slate-800 dark:border-slate-700 dark:text-slate-100 dark:focus:border-green-500"
                     />
                 </div>
                 <div className="grid gap-6 md:grid-cols-2">
-                    <div className="rounded-2xl border border-gray-200 bg-white p-6 shadow-sm">
-                        <label className="mb-2 block text-sm font-medium text-gray-700">
+                    <div className="rounded-2xl border border-gray-200 bg-white p-6 shadow-sm dark:bg-slate-900 dark:border-slate-800">
+                        <label className="mb-2 block text-sm font-medium text-gray-700 dark:text-slate-300">
                             Low Stock Threshold
                         </label>
                         <input
@@ -99,11 +99,11 @@ const Settings = () => {
                             name="lowStockThreshold"
                             value={settings.lowStockThreshold}
                             onChange={handleChange}
-                            className="w-full rounded-xl border border-gray-300 px-4 py-3 outline-none transition focus:border-green-600"
+                            className="w-full rounded-xl border border-gray-300 px-4 py-3 outline-none transition focus:border-green-600 dark:bg-slate-800 dark:border-slate-700 dark:text-slate-100 dark:focus:border-green-500"
                         />
                     </div>
-                    <div className="rounded-2xl border border-gray-200 bg-white p-6 shadow-sm">
-                        <label className="mb-2 block text-sm font-medium text-gray-700">
+                    <div className="rounded-2xl border border-gray-200 bg-white p-6 shadow-sm dark:bg-slate-900 dark:border-slate-800">
+                        <label className="mb-2 block text-sm font-medium text-gray-700 dark:text-slate-300">
                             Auto Logout (Minutes)
                         </label>
                         <input
@@ -111,20 +111,20 @@ const Settings = () => {
                             name="autoLogoutMinutes"
                             value={settings.autoLogoutMinutes}
                             onChange={handleChange}
-                            className="w-full rounded-xl border border-gray-300 px-4 py-3 outline-none transition focus:border-green-600"
+                            className="w-full rounded-xl border border-gray-300 px-4 py-3 outline-none transition focus:border-green-600 dark:bg-slate-800 dark:border-slate-700 dark:text-slate-100 dark:focus:border-green-500"
                         />
                     </div>
                 </div>
                 <div className="grid gap-6 md:grid-cols-2">
-                    <div className="rounded-2xl border border-gray-200 bg-white p-6 shadow-sm">
-                        <label className="mb-2 block text-sm font-medium text-gray-700">
+                    <div className="rounded-2xl border border-gray-200 bg-white p-6 shadow-sm dark:bg-slate-900 dark:border-slate-800">
+                        <label className="mb-2 block text-sm font-medium text-gray-700 dark:text-slate-300">
                             Currency
                         </label>
                         <select
                             name="currency"
                             value={settings.currency}
                             onChange={handleChange}
-                            className="w-full rounded-xl border border-gray-300 px-4 py-3 outline-none transition focus:border-green-600"
+                            className="w-full rounded-xl border border-gray-300 px-4 py-3 outline-none transition focus:border-green-600 dark:bg-slate-800 dark:border-slate-700 dark:text-slate-100 dark:focus:border-green-500"
                         >
                             <option value="INR">
                                 INR (₹)
@@ -137,15 +137,15 @@ const Settings = () => {
                             </option>
                         </select>
                     </div>
-                    <div className="rounded-2xl border border-gray-200 bg-white p-6 shadow-sm">
-                        <label className="mb-2 block text-sm font-medium text-gray-700">
+                    <div className="rounded-2xl border border-gray-200 bg-white p-6 shadow-sm dark:bg-slate-900 dark:border-slate-800">
+                        <label className="mb-2 block text-sm font-medium text-gray-700 dark:text-slate-300">
                             Theme
                         </label>
                         <select
                             name="theme"
                             value={settings.theme}
                             onChange={handleChange}
-                            className="w-full rounded-xl border border-gray-300 px-4 py-3 outline-none transition focus:border-green-600"
+                            className="w-full rounded-xl border border-gray-300 px-4 py-3 outline-none transition focus:border-green-600 dark:bg-slate-800 dark:border-slate-700 dark:text-slate-100 dark:focus:border-green-500"
                         >
                             <option value="light">
                                 Light

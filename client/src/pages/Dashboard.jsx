@@ -162,7 +162,7 @@ function Dashboard() {
       initial={{ opacity: 0 }}
       animate={{ opacity: 1 }}
       transition={{ duration: 0.35 }}
-      className="min-h-screen bg-[#fafafa]"
+      className="min-h-screen bg-[#fafafa] dark:bg-slate-950"
     >
       <Toaster
         position="top-right"
@@ -209,13 +209,13 @@ function Dashboard() {
         </div>
 
         {/* Products */}
-        <div className="mt-6 bg-white rounded-2xl border border-gray-200 shadow-[0_2px_8px_rgba(0,0,0,0.04)] overflow-hidden">
-          <div className="px-6 py-5 border-b border-gray-200 flex justify-between items-center">
+        <div className="mt-6 bg-white dark:bg-slate-900 rounded-2xl border border-gray-200 dark:border-slate-800 shadow-[0_2px_8px_rgba(0,0,0,0.04)] overflow-hidden">
+          <div className="px-6 py-5 border-b border-gray-200 dark:border-slate-800 flex justify-between items-center">
             <div>
-              <h2 className="text-lg font-semibold text-gray-900">
+              <h2 className="text-lg font-semibold text-gray-900 dark:text-slate-100">
                 Products
               </h2>
-              <p className="text-sm text-gray-500 mt-1">
+              <p className="text-sm text-gray-500 dark:text-slate-400 mt-1">
                 {filteredProducts.length} products found
               </p>
             </div>

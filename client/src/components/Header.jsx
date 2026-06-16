@@ -10,14 +10,14 @@ function Header() {
       className="flex flex-col md:flex-row md:items-center md:justify-between"
     >
       <div className="flex items-center gap-4">
-        <div className="h-12 w-12 rounded-2xl bg-green-100 flex items-center justify-center">
-          <Package className="text-green-600" size={24} />
+        <div className="h-12 w-12 rounded-2xl bg-green-100 dark:bg-green-950 flex items-center justify-center">
+          <Package className="text-green-600 dark:text-green-400" size={24} />
         </div>
         <div>
-          <h1 className="text-3xl font-bold tracking-tight text-gray-900">
+          <h1 className="text-3xl font-bold tracking-tight text-gray-900 dark:text-slate-100">
             Product Inventory
           </h1>
-          <p className="text-sm text-gray-500 mt-1">
+          <p className="text-sm text-gray-500 dark:text-slate-400 mt-1">
             Manage products and track inventory in real time.
           </p>
         </div>

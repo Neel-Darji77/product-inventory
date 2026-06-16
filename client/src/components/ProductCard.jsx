@@ -89,11 +89,15 @@ function ProductCard({
       }}
       className="
       bg-white
+      dark:bg-slate-900
       border
       border-gray-200
+      dark:border-slate-800
       rounded-2xl
       p-5
       shadow-[0_2px_8px_rgba(0,0,0,.04)]
+      transition-colors
+      duration-200
       "
     >
       {/* Top */}
@@ -101,14 +105,14 @@ function ProductCard({
       <div className="flex justify-between items-start">
         <div>
           <div className="flex items-center gap-3">
-            <div className="h-10 w-10 rounded-xl bg-green-50 flex items-center justify-center">
+            <div className="h-10 w-10 rounded-xl bg-green-50 dark:bg-green-950/40 flex items-center justify-center">
               <Package
                 size={20}
-                className="text-green-600"
+                className="text-green-600 dark:text-green-400"
               />
             </div>
             <div>
-              <h3 className="font-semibold text-gray-900 text-lg">
+              <h3 className="font-semibold text-gray-900 dark:text-slate-100 text-lg">
                 {product.name}
               </h3>
               <span
@@ -120,7 +124,7 @@ function ProductCard({
           </div>
         </div>
 
-        <p className="font-bold text-xl text-gray-900">
+        <p className="font-bold text-xl text-gray-900 dark:text-slate-100">
           {getCurrencySymbol()}{product.price}
         </p>
       </div>
@@ -128,10 +132,10 @@ function ProductCard({
       {/* Stock */}
       <div className="mt-6 flex justify-between">
         <div className="flex gap-2 text-sm">
-          <span className="text-gray-500">
+          <span className="text-gray-500 dark:text-slate-400">
             Stock
           </span>
-          <span className="font-semibold">
+          <span className="font-semibold dark:text-slate-200">
             {product.stock}
           </span>
         </div>

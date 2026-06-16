@@ -14,15 +14,15 @@ function FilterBar({
       initial={{ opacity: 0, y: 8 }}
       animate={{ opacity: 1, y: 0 }}
       transition={{ duration: 0.25 }}
-      className="bg-white border border-gray-200 rounded-2xl shadow-sm p-5"
+      className="bg-white dark:bg-slate-900 border border-gray-200 dark:border-slate-800 rounded-2xl shadow-sm p-5 transition-colors duration-200"
     >
       <div className="flex flex-col lg:flex-row lg:items-center lg:justify-between gap-4">
         {/* Left */}
         <div>
-          <h2 className="text-lg font-semibold text-gray-900">
+          <h2 className="text-lg font-semibold text-gray-900 dark:text-slate-100">
             Products
           </h2>
-          <p className="text-sm text-gray-500 mt-1">
+          <p className="text-sm text-gray-500 dark:text-slate-400 mt-1">
             {totalProducts} products available
           </p>
         </div>
@@ -46,7 +46,10 @@ function FilterBar({
                 rounded-xl
                 border
                 border-gray-200
+                dark:border-slate-700
                 bg-white
+                dark:bg-slate-800
+                dark:text-slate-100
                 pl-10
                 pr-3
                 text-sm
@@ -72,7 +75,10 @@ function FilterBar({
                 rounded-xl
                 border
                 border-gray-200
+                dark:border-slate-700
                 bg-white
+                dark:bg-slate-800
+                dark:text-slate-100
                 pl-10
                 pr-3
                 text-sm
