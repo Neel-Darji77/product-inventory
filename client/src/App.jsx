@@ -1,11 +1,14 @@
-import { Routes, Route, Navigate } from "react-router-dom";
+import { Navigate, Route, Routes } from "react-router-dom";
 
-import Login from "./pages/Login";
-import Dashboard from "./pages/Dashboard";
+import ProtectedRoute from "./components/ProtectedRoute";
 
 import DashboardLayout from "./layouts/DashboardLayout";
 
-import ProtectedRoute from "./components/ProtectedRoute";
+import Analytics from "./pages/Analytics";
+import Dashboard from "./pages/Dashboard";
+import Login from "./pages/Login";
+import Users from "./pages/Users";
+import Settings from "./pages/Settings";
 
 function App() {
     return (
@@ -24,10 +27,27 @@ function App() {
                     </ProtectedRoute>
                 }
             >
+
                 <Route
                     index
                     element={<Dashboard />}
                 />
+
+                <Route
+                    path="users"
+                    element={<Users />}
+                />
+
+                <Route
+                    path="analytics"
+                    element={<Analytics />}
+                />
+
+                <Route
+                    path="settings"
+                    element={<Settings />}
+                />
+
             </Route>
 
             <Route
