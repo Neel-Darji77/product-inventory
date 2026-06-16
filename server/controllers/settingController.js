@@ -29,16 +29,17 @@ export const updateSettings = async (
     res
 ) => {
     try {
+        const { _id, __v, createdAt, updatedAt, ...updateData } = req.body;
         let settings = await Setting.findOne();
 
         if (!settings) {
             settings = await Setting.create(
-                req.body
+                updateData
             );
         } else {
             settings = await Setting.findByIdAndUpdate(
                 settings._id,
-                req.body,
+                updateData,
                 {
                     new: true,
                     runValidators: true

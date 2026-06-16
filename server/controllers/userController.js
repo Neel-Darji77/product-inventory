@@ -65,9 +65,12 @@ export const createUser = async (req, res) => {
             message: "User created successfully.",
             data: {
                 id: user._id,
+                _id: user._id,
                 name: user.name,
                 email: user.email,
-                role: user.role
+                role: user.role,
+                isActive: user.isActive,
+                createdAt: user.createdAt
             }
         });
     } catch (error) {

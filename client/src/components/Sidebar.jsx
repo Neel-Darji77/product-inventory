@@ -10,11 +10,13 @@ import {
 import { NavLink, useNavigate } from "react-router-dom";
 
 import { useAuth } from "../context/AuthContext";
+import { useSettings } from "../context/SettingsContext";
 
 const Sidebar = () => {
     const navigate = useNavigate();
 
     const { logout, user } = useAuth();
+    const { settings } = useSettings();
 
     const handleLogout = () => {
         logout();
@@ -31,10 +33,10 @@ const Sidebar = () => {
     return (
         <aside className="flex h-screen w-72 flex-col border-r bg-white">
             <div className="border-b p-6">
-                <h1 className="text-2xl font-bold text-green-600">
-                    Inventory
+                <h1 className="text-xl font-bold text-green-600 truncate animate-pulse-once" title={settings?.companyName}>
+                    {settings?.companyName || "Inventory"}
                 </h1>
-                <p className="mt-1 text-sm text-gray-500">
+                <p className="mt-1 text-xs text-gray-500">
                     Management System
                 </p>
             </div>
@@ -74,13 +76,15 @@ const Sidebar = () => {
                         Analytics
                     </NavLink>
                 )}
-                <NavLink
-                    to="/settings"
-                    className={navItemClass}
-                >
-                    <Settings size={20} />
-                    Settings
-                </NavLink>
+                {user?.role === "admin" && (
+                    <NavLink
+                        to="/settings"
+                        className={navItemClass}
+                    >
+                        <Settings size={20} />
+                        Settings
+                    </NavLink>
+                )}
             </nav>
             <div className="border-t p-4">
                 <div className="mb-4">

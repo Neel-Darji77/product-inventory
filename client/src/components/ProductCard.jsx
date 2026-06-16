@@ -6,12 +6,16 @@ import {
   AlertTriangle,
   CheckCircle2,
 } from "lucide-react";
+import { useAuth } from "../context/AuthContext";
+import { useSettings } from "../context/SettingsContext";
 
 function ProductCard({
   product,
   onDeleteClick,
   onUpdateClick,
 }) {
+  const { user } = useAuth();
+  const { settings } = useSettings();
   const getCategoryColor = () => {
     switch (product.category) {
       case "Electronics":
@@ -29,6 +33,7 @@ function ProductCard({
   };
 
   const getStatus = () => {
+    const threshold = settings?.lowStockThreshold ?? 10;
     if (product.stock === 0) {
       return {
         text: "Out of Stock",
@@ -39,12 +44,12 @@ function ProductCard({
       };
     }
 
-    if (product.stock <= 5) {
+    if (product.stock <= threshold) {
       return {
         text: "Low Stock",
         color: "text-orange-500",
         icon: AlertTriangle,
-        progress: product.stock * 20,
+        progress: Math.min((product.stock / threshold) * 100, 100),
         bar: "bg-orange-400",
       };
     }
@@ -56,6 +61,18 @@ function ProductCard({
       progress: Math.min(product.stock * 8, 100),
       bar: "bg-green-500",
     };
+  };
+
+  const getCurrencySymbol = () => {
+    switch (settings?.currency) {
+      case "USD":
+        return "$";
+      case "EUR":
+        return "€";
+      case "INR":
+      default:
+        return "₹";
+    }
   };
 
   const status = getStatus();
@@ -104,7 +121,7 @@ function ProductCard({
         </div>
 
         <p className="font-bold text-xl text-gray-900">
-          ₹{product.price}
+          {getCurrencySymbol()}{product.price}
         </p>
       </div>
 
@@ -140,59 +157,59 @@ function ProductCard({
       </div>
 
       {/* Buttons */}
-      <div className="mt-6 flex gap-3">
-        <button
-          // onClick={updateStock}
-          onClick={() => onUpdateClick(product)}
+      {(user?.role === "admin" || user?.role === "manager") && (
+        <div className="mt-6 flex gap-3">
+          <button
+            onClick={() => onUpdateClick(product)}
+            className="
+            flex-1
+            h-10
+            rounded-xl
+            border
+            border-green-500
+            text-green-600
+            font-medium
+            text-sm
+            flex
+            items-center
+            justify-center
+            gap-2
+            hover:bg-green-50
+            transition
+            active:scale-95
+            "
+          >
+            <Pencil size={15} />
+            Update
+          </button>
 
-          className="
-          flex-1
-          h-10
-          rounded-xl
-          border
-          border-green-500
-          text-green-600
-          font-medium
-          text-sm
-          flex
-          items-center
-          justify-center
-          gap-2
-          hover:bg-green-50
-          transition
-          active:scale-95
-          "
-        >
-          <Pencil size={15} />
-          Update
-        </button>
-
-        <button
-          // onClick={() => onDelete(product._id)}
-          onClick={() => onDeleteClick(product)}
-          className="
-          flex-1
-          h-10
-          rounded-xl
-          border
-          border-red-300
-          text-red-500
-          font-medium
-          text-sm
-          flex
-          items-center
-          justify-center
-          gap-2
-          hover:bg-red-50
-          transition
-          active:scale-95
-          "
-        >
-          <Trash2 size={15} />
-          Delete
-        </button>
-
-      </div>
+          {user?.role === "admin" && (
+            <button
+              onClick={() => onDeleteClick(product)}
+              className="
+              flex-1
+              h-10
+              rounded-xl
+              border
+              border-red-300
+              text-red-500
+              font-medium
+              text-sm
+              flex
+              items-center
+              justify-center
+              gap-2
+              hover:bg-red-50
+              transition
+              active:scale-95
+              "
+            >
+              <Trash2 size={15} />
+              Delete
+            </button>
+          )}
+        </div>
+      )}
     </motion.div>
   );
 }

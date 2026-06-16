@@ -4,6 +4,7 @@ import Product from "../models/Product.js";
 import verifyToken from "../middlewares/verifyToken.js";
 import authorize from "../middlewares/authorize.js";
 import { ROLES } from "../constants/roles.js";
+import Setting from "../models/Setting.js";
 
 const router = express.Router();
 
@@ -40,9 +41,12 @@ router.get("/stats",
     try { 
         const active = await Product.find({ isActive: true });
 
+        const settings = await Setting.findOne();
+        const lowStockThreshold = settings ? settings.lowStockThreshold : 5;
+
         let stats = {
             total: active.length,
-            lowStock: active.filter(a => a.stock <= 5).length,
+            lowStock: active.filter(a => a.stock <= lowStockThreshold).length,
             totalCategory: getTotalCategory(active)
         };
         res.json(stats);

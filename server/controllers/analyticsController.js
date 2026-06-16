@@ -1,15 +1,19 @@
 import Product from "../models/Product.js";
 import User from "../models/User.js";
+import Setting from "../models/Setting.js";
 
 export const getDashboardAnalytics = async (req, res) => {
     try {
+        const settings = await Setting.findOne();
+        const lowStockThreshold = settings ? settings.lowStockThreshold : 5;
+
         const activeProductsQuery = {
             isActive: true
         };
         const lowStockQuery = {
             ...activeProductsQuery,
             stock: {
-                $lte: 5
+                $lte: lowStockThreshold
             }
         };
 

@@ -16,7 +16,7 @@ router.use(verifyToken);
 
 router.get(
     "/",
-    authorize(ROLES.ADMIN),
+    authorize(ROLES.ADMIN, ROLES.MANAGER, ROLES.VIEWER),
     getSettings
 );
 

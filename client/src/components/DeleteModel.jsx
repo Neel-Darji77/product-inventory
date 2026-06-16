@@ -1,6 +1,7 @@
 import { useEffect, useState } from "react";
 import { AnimatePresence, motion } from "framer-motion";
 import { AlertTriangle, Trash2, X } from "lucide-react";
+import { useSettings } from "../context/SettingsContext";
 
 function DeleteModal({
   open,
@@ -11,6 +12,19 @@ function DeleteModal({
 
 {
   const [loading, setLoading] = useState(false);
+  const { settings } = useSettings();
+
+  const getCurrencySymbol = () => {
+    switch (settings?.currency) {
+      case "USD":
+        return "$";
+      case "EUR":
+        return "€";
+      case "INR":
+      default:
+        return "₹";
+    }
+  };
 
   useEffect(() => {
     function handleKeyDown(event) {
@@ -159,7 +173,7 @@ function DeleteModal({
                     Price
                   </span>
                   <span className="text-sm font-medium">
-                    ₹{product?.price}
+                    {getCurrencySymbol()}{product?.price}
                   </span>
                 </div>
                 <div className="flex justify-between mt-3">

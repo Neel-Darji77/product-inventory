@@ -1,12 +1,12 @@
 import { useCallback, useEffect, useMemo, useState } from "react";
 import { AnimatePresence, motion } from "framer-motion";
 import { Toaster, toast } from "react-hot-toast";
+import { useAuth } from "../context/AuthContext";
 
 import Header from "../components/Header";
 import StatsBar from "../components/StatsBar";
 import AddProductForm from "../components/AddProductForm";
 import FilterBar from "../components/FilterBar";
-// import ProductTable from "./components/ProductTable";
 import ProductList from "../components/ProductList";
 import LoadingSkeleton from "../components/LoadingSkeleton";
 import EmptyState from "../components/EmptyState";
@@ -16,6 +16,7 @@ import UpdateStockModal from "../components/UpdateStockModel";
 import api from "../utils/api";
 
 function Dashboard() {
+  const { user } = useAuth();
   const [products, setProducts] = useState([]);
   const [stats, setStats] = useState({});
   const [search, setSearch] = useState("");
@@ -182,17 +183,19 @@ function Dashboard() {
           <StatsBar stats={stats} />
         </div>
 
-        <motion.div
-          layout
-          initial={{ opacity: 0, y: 10 }}
-          animate={{ opacity: 1, y: 0 }}
-          transition={{ duration: 0.25 }}
-          className="mt-6"
-        >
-          <AddProductForm
-            onAdd={handleAdd}
-          />
-        </motion.div>
+        {(user?.role === "admin" || user?.role === "manager") && (
+          <motion.div
+            layout
+            initial={{ opacity: 0, y: 10 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ duration: 0.25 }}
+            className="mt-6"
+          >
+            <AddProductForm
+              onAdd={handleAdd}
+            />
+          </motion.div>
+        )}
 
         {/* Search */}
         <div className="mt-6">

@@ -1,12 +1,11 @@
 import { useEffect, useState } from "react";
 import toast from "react-hot-toast";
 
-import {
-    getSettings,
-    updateSettings
-} from "../services/settingService";
+import { updateSettings } from "../services/settingService";
+import { useSettings } from "../context/SettingsContext";
 
 const Settings = () => {
+    const { settings: globalSettings, refreshSettings, loadingSettings } = useSettings();
     const [settings, setSettings] = useState({
         companyName: "",
         lowStockThreshold: 10,
@@ -15,32 +14,26 @@ const Settings = () => {
         autoLogoutMinutes: 30
     });
 
-    const [loading, setLoading] = useState(true);
     const [saving, setSaving] = useState(false);
-    const fetchSettings = async () => {
-        try {
-            setLoading(true);
-            const response = await getSettings();
-            setSettings(response.data);
-        } catch (error) {
-            toast.error(error.message);
-        } finally {
-            setLoading(false);
-        }
-    };
 
     useEffect(() => {
-        fetchSettings();
-    }, []);
+        if (globalSettings) {
+            setSettings(globalSettings);
+        }
+    }, [globalSettings]);
 
     const handleChange = (event) => {
         const {
             name,
             value
         } = event.target;
+        const parsedValue = (name === "lowStockThreshold" || name === "autoLogoutMinutes")
+            ? Number(value)
+            : value;
+
         setSettings((previousState) => ({
             ...previousState,
-            [name]: value
+            [name]: parsedValue
         }));
     };
 
@@ -51,8 +44,8 @@ const Settings = () => {
             const response = await updateSettings(
                 settings
             );
-            setSettings(response.data);
-            toast.success(response.message);
+            await refreshSettings();
+            toast.success(response.message || "Settings updated successfully.");
         } catch (error) {
             toast.error(error.message);
         } finally {
@@ -60,7 +53,7 @@ const Settings = () => {
         }
     };
 
-    if (loading) {
+    if (loadingSettings) {
         return (
             <div className="flex justify-center py-20">
                 <p className="text-lg text-gray-500">
