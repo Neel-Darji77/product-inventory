@@ -1,7 +1,7 @@
 import { useEffect, useMemo, useState } from "react";
 import toast from "react-hot-toast";
 
-import CreateUserModal from "../components/CreateUserModal";
+import CreateUserModal from "../components/CreateUserModel.jsx";
 
 import {
     createUser,
