@@ -2,19 +2,25 @@ import BASE_URL from "../config";
 
 const api = async (url, options = {}) => {
     const token = localStorage.getItem("token");
+    const { headers, ...restOptions } = options;
+    const normalizedBaseUrl = BASE_URL.replace(/\/+$/, "");
+    const normalizedUrl = url.replace(/^\/+/, "");
 
     const config = {
+        ...restOptions,
         headers: {
             "Content-Type": "application/json",
             ...(token && {
                 Authorization: `Bearer ${token}`
             }),
-            ...options.headers
-        },
-        ...options
+            ...headers
+        }
     };
 
-    const response = await fetch(`${BASE_URL}${url}`, config);
+    const response = await fetch(
+        `${normalizedBaseUrl}/${normalizedUrl}`,
+        config
+    );
 
     const data = await response.json();
 

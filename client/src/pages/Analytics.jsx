@@ -8,14 +8,18 @@ import { getDashboardAnalytics } from "../services/analyticsService";
 const Analytics = () => {
     const [analytics, setAnalytics] = useState(null);
     const [loading, setLoading] = useState(true);
+    const [error, setError] = useState("");
 
     const fetchAnalytics = async () => {
         try {
             setLoading(true);
+            setError("");
             const response =
                 await getDashboardAnalytics();
             setAnalytics(response.data);
         } catch (error) {
+            setAnalytics(null);
+            setError(error.message);
             toast.error(error.message);
         } finally {
             setLoading(false);
@@ -32,6 +36,25 @@ const Analytics = () => {
                 <p className="text-gray-500">
                     Loading analytics...
                 </p>
+            </div>
+        );
+    }
+
+    if (error || !analytics) {
+        return (
+            <div className="rounded-2xl border border-red-200 bg-white p-8 shadow-sm">
+                <h1 className="text-xl font-semibold text-red-600">
+                    Unable to load analytics
+                </h1>
+                <p className="mt-2 text-gray-500">
+                    {error || "Analytics data is unavailable."}
+                </p>
+                <button
+                    onClick={fetchAnalytics}
+                    className="mt-6 rounded-xl bg-green-600 px-5 py-2 font-medium text-white transition hover:bg-green-700"
+                >
+                    Try Again
+                </button>
             </div>
         );
     }
