@@ -172,21 +172,21 @@ const Users = () => {
             </div>
             <div className="overflow-hidden rounded-2xl border border-gray-200 dark:border-slate-800 bg-white dark:bg-slate-900 shadow-sm">
                 <table className="w-full">
-                    <thead className="bg-gray-50">
-                        <tr>
-                            <th className="px-6 py-4 text-left text-sm font-semibold text-gray-600">
+                    <thead className="bg-gray-50 dark:bg-slate-800">
+                        <tr className="bg-gray-50 dark:bg-slate-800 border-b border-gray-200 dark:border-slate-800">
+                            <th className="px-6 py-4 text-left text-sm font-semibold text-gray-600 dark:text-slate-300">
                                 Name
                             </th>
-                            <th className="px-6 py-4 text-left text-sm font-semibold text-gray-600">
+                            <th className="px-6 py-4 text-left text-sm font-semibold text-gray-600 dark:text-slate-300">
                                 Email
                             </th>
-                            <th className="px-6 py-4 text-left text-sm font-semibold text-gray-600">
+                            <th className="px-6 py-4 text-left text-sm font-semibold text-gray-600 dark:text-slate-300">
                                 Role
                             </th>
-                            <th className="px-6 py-4 text-left text-sm font-semibold text-gray-600">
+                            <th className="px-6 py-4 text-left text-sm font-semibold text-gray-600 dark:text-slate-300">
                                 Status
                             </th>
-                            <th className="px-6 py-4 text-center text-sm font-semibold text-gray-600">
+                            <th className="px-6 py-4 text-center text-sm font-semibold text-gray-600 dark:text-slate-300">
                                 Actions
                             </th>
                         </tr>

@@ -49,15 +49,15 @@ function AddProductForm({ onAdd }) {
   return (
     <motion.div
       layout
-      className="bg-white rounded-2xl border border-gray-200 shadow-sm p-6"
+      className="bg-white dark:bg-slate-900 rounded-2xl border border-gray-200 dark:border-slate-800 shadow-sm p-6 transition-colors duration-200"
     >
       <div className="mb-5">
 
-        <h2 className="text-lg font-semibold text-gray-900">
+        <h2 className="text-lg font-semibold text-gray-900 dark:text-slate-100">
           Add New Product
         </h2>
 
-        <p className="text-sm text-gray-500 mt-1">
+        <p className="text-sm text-gray-500 dark:text-slate-400 mt-1">
           Create a new inventory item.
         </p>
 
@@ -71,19 +71,19 @@ function AddProductForm({ onAdd }) {
           ref={nameRef}
           type="text"
           placeholder="Product Name"
-          className="h-10 rounded-xl border border-gray-200 px-4 text-sm focus:outline-none focus:ring-2 focus:ring-green-500"
+          className="h-10 rounded-xl border border-gray-200 dark:border-slate-700 bg-white dark:bg-slate-800 dark:text-slate-100 px-4 text-sm focus:outline-none focus:ring-2 focus:ring-green-500 transition-colors"
         />
 
         <input
           ref={priceRef}
           type="number"
           placeholder="Price"
-          className="h-10 rounded-xl border border-gray-200 px-4 text-sm focus:outline-none focus:ring-2 focus:ring-green-500"
+          className="h-10 rounded-xl border border-gray-200 dark:border-slate-700 bg-white dark:bg-slate-800 dark:text-slate-100 px-4 text-sm focus:outline-none focus:ring-2 focus:ring-green-500 transition-colors"
         />
 
         <select
           ref={categoryRef}
-          className="h-10 rounded-xl border border-gray-200 px-4 text-sm focus:outline-none focus:ring-2 focus:ring-green-500 bg-white"
+          className="h-10 rounded-xl border border-gray-200 dark:border-slate-700 px-4 text-sm focus:outline-none focus:ring-2 focus:ring-green-500 bg-white dark:bg-slate-800 dark:text-slate-100 transition-colors"
         >
           <option value="">Category</option>
           <option value="Electronics">Electronics</option>
@@ -95,7 +95,7 @@ function AddProductForm({ onAdd }) {
           ref={stockRef}
           type="number"
           placeholder="Stock"
-          className="h-10 rounded-xl border border-gray-200 px-4 text-sm focus:outline-none focus:ring-2 focus:ring-green-500"
+          className="h-10 rounded-xl border border-gray-200 dark:border-slate-700 bg-white dark:bg-slate-800 dark:text-slate-100 px-4 text-sm focus:outline-none focus:ring-2 focus:ring-green-500 transition-colors"
         />
 
         <button
