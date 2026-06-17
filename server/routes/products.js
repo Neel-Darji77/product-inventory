@@ -5,8 +5,14 @@ import verifyToken from "../middlewares/verifyToken.js";
 import authorize from "../middlewares/authorize.js";
 import { ROLES } from "../constants/roles.js";
 import Setting from "../models/Setting.js";
+import multer from "multer";
+import { uploadStream, isCloudinaryConfigured } from "../utils/cloudinary.js";
 
 const router = express.Router();
+const upload = multer({
+    storage: multer.memoryStorage(),
+    limits: { fileSize: 5 * 1024 * 1024 } // 5MB limit
+});
 
 router.use(verifyToken);
 
@@ -70,16 +76,42 @@ router.get("/:id",
     }
 })
 
+router.post("/upload-image",
+    authorize(ROLES.ADMIN, ROLES.MANAGER),
+    upload.single("image"),
+    async (req, res) => {
+        try {
+            if (!req.file) {
+                return res.status(400).json({ error: "No image file provided" });
+            }
+
+            if (isCloudinaryConfigured) {
+                const result = await uploadStream(req.file.buffer);
+                return res.json({ imageUrl: result.secure_url });
+            } else {
+                // Fallback to base64 Data URI
+                const base64Image = `data:${req.file.mimetype};base64,${req.file.buffer.toString("base64")}`;
+                return res.json({ imageUrl: base64Image });
+            }
+        } catch (err) {
+            console.error("Image upload error:", err);
+            res.status(500).json({ error: "Failed to upload image" });
+        }
+    }
+);
+
 router.post("/", 
     authorize(ROLES.ADMIN, ROLES.MANAGER),
     async (req, res) => {
     try { 
-        let { name, price, category, stock } = req.body;
+        let { name, price, category, stock, description, image } = req.body;
         let product = await Product.create({
             name,
             price: Number(price),
             category,
             stock: Number(stock),
+            description: description || "",
+            image: image || "",
             isActive: true,
         });
         // products.push(product);
@@ -94,10 +126,10 @@ router.patch("/:id",
     authorize(ROLES.ADMIN, ROLES.MANAGER),
     async (req, res) => {
     try { 
-        const { name, price, category, stock } = req.body;
+        const { name, price, category, stock, description, image } = req.body;
         const product = await Product.findByIdAndUpdate(
             req.params.id,
-            { name, price, category, stock },
+            { name, price, category, stock, description, image },
             { new: true, runValidators: true }
         );
 

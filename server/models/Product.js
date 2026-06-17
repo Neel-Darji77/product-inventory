@@ -19,6 +19,14 @@ const productSchema = new mongoose.Schema(
             required: [true, "Stock is required"],
             default: 0
         },
+        description: {
+            type: String,
+            default: ""
+        },
+        image: {
+            type: String,
+            default: ""
+        },
         isActive: {
             type: Boolean,
             default: true,

@@ -87,128 +87,88 @@ function ProductCard({
       transition={{
         duration: 0.2,
       }}
-      className="
-      bg-white
-      dark:bg-slate-900
-      border
-      border-gray-200
-      dark:border-slate-800
-      rounded-2xl
-      p-5
-      shadow-[0_2px_8px_rgba(0,0,0,.04)]
-      transition-colors
-      duration-200
-      "
+      className="bg-white dark:bg-slate-900 border border-gray-200 dark:border-slate-800 rounded-3xl p-5 shadow-[0_2px_8px_rgba(0,0,0,.04)] hover:shadow-lg transition-all duration-200"
     >
-      {/* Top */}
-
-      <div className="flex justify-between items-start">
-        <div>
-          <div className="flex items-center gap-3">
-            <div className="h-10 w-10 rounded-xl bg-green-50 dark:bg-green-950/40 flex items-center justify-center">
-              <Package
-                size={20}
-                className="text-green-600 dark:text-green-400"
-              />
-            </div>
-            <div>
-              <h3 className="font-semibold text-gray-900 dark:text-slate-100 text-lg">
-                {product.name}
-              </h3>
-              <span
-                className={`inline-flex mt-2 px-3 py-1 rounded-full text-xs font-medium ${getCategoryColor()}`}
-              >
-                {product.category}
-              </span>
-            </div>
-          </div>
+      {/* Product Image Cover */}
+      {product.image ? (
+        <div className="w-full h-40 rounded-2xl overflow-hidden mb-4 border border-gray-100 dark:border-slate-800 bg-gray-50 dark:bg-slate-800/40 relative">
+          <img
+            src={product.image}
+            alt={product.name}
+            className="w-full h-full object-cover hover:scale-105 transition-transform duration-300"
+          />
         </div>
+      ) : (
+        <div className="w-full h-40 rounded-2xl overflow-hidden mb-4 border border-gray-100 dark:border-slate-800 bg-gradient-to-br from-green-50 to-green-100/30 dark:from-slate-800/40 dark:to-slate-850/20 flex items-center justify-center">
+          <Package
+            size={36}
+            className="text-green-500/70 dark:text-green-400/50"
+          />
+        </div>
+      )}
 
-        <p className="font-bold text-xl text-gray-900 dark:text-slate-100">
-          {getCurrencySymbol()}{product.price}
-        </p>
+      {/* Product Information */}
+      <div className="flex justify-between items-start">
+        <div className="flex-1 min-w-0 pr-2">
+          <h3 className="font-bold text-gray-900 dark:text-slate-100 text-lg truncate" title={product.name}>
+            {product.name}
+          </h3>
+          <span
+            className={`inline-flex mt-1.5 px-2.5 py-0.5 rounded-full text-xs font-semibold ${getCategoryColor()}`}
+          >
+            {product.category}
+          </span>
+        </div>
+        <div className="text-right">
+          <p className="font-extrabold text-xl text-gray-900 dark:text-slate-100">
+            {getCurrencySymbol()}{product.price}
+          </p>
+        </div>
       </div>
 
-      {/* Stock */}
-      <div className="mt-6 flex justify-between">
-        <div className="flex gap-2 text-sm">
-          <span className="text-gray-500 dark:text-slate-400">
-            Stock
-          </span>
-          <span className="font-semibold dark:text-slate-200">
+      {/* Description */}
+      <p className="mt-3 text-xs text-gray-500 dark:text-slate-400 line-clamp-2 min-h-[2rem]" title={product.description}>
+        {product.description || "No description provided."}
+      </p>
+
+      {/* Stock Status */}
+      <div className="mt-4 pt-4 border-t border-gray-100 dark:border-slate-800/60 flex justify-between items-center">
+        <div className="flex items-center gap-1.5 text-xs text-gray-500 dark:text-slate-400">
+          <span>Stock:</span>
+          <span className="font-bold text-gray-900 dark:text-slate-200">
             {product.stock}
           </span>
         </div>
-        {/* <div className="mt-2 h-2 bg-gray-100 rounded-full overflow-hidden">
-          <div
-            className={`${status.bar} h-full rounded-full transition-all duration-500`}
-            style={{
-              width: `${status.progress}%`,
-            }}
-          />
-        </div> */}
-        <div className="flex items-center gap-2">
+        <div className="flex items-center gap-1.5">
           <StatusIcon
-            size={16}
+            size={14}
             className={status.color}
           />
           <span
-            className={`text-sm font-medium ${status.color}`}
+            className={`text-xs font-semibold ${status.color}`}
           >
             {status.text}
           </span>
         </div>
       </div>
 
-      {/* Buttons */}
+      {/* Action Buttons */}
       {(user?.role === "admin" || user?.role === "manager") && (
-        <div className="mt-6 flex gap-3">
+        <div className="mt-4 pt-4 border-t border-gray-100 dark:border-slate-800/60 flex gap-3">
           <button
             onClick={() => onUpdateClick(product)}
-            className="
-            flex-1
-            h-10
-            rounded-xl
-            border
-            border-green-500
-            text-green-600
-            font-medium
-            text-sm
-            flex
-            items-center
-            justify-center
-            gap-2
-            hover:bg-green-50
-            transition
-            active:scale-95
-            "
+            className="flex-1 h-9 rounded-xl border border-green-500/30 dark:border-green-500/20 text-green-600 dark:text-green-400 hover:bg-green-50 dark:hover:bg-green-950/25 font-semibold text-xs flex items-center justify-center gap-1.5 transition active:scale-95"
           >
-            <Pencil size={15} />
+            <Pencil size={13} />
             Update
           </button>
 
           {user?.role === "admin" && (
             <button
               onClick={() => onDeleteClick(product)}
-              className="
-              flex-1
-              h-10
-              rounded-xl
-              border
-              border-red-300
-              text-red-500
-              font-medium
-              text-sm
-              flex
-              items-center
-              justify-center
-              gap-2
-              hover:bg-red-50
-              transition
-              active:scale-95
-              "
+              className="flex-1 h-9 rounded-xl border border-red-500/20 text-red-500 hover:bg-red-50 dark:hover:bg-red-950/25 font-semibold text-xs flex items-center justify-center gap-1.5 transition active:scale-95"
             >
-              <Trash2 size={15} />
+              <Trash2 size={13} />
               Delete
             </button>
           )}

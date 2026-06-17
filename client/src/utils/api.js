@@ -6,17 +6,18 @@ const api = async (url, options = {}) => {
     const normalizedBaseUrl = BASE_URL.replace(/\/+$/, "");
     const normalizedUrl = url.replace(/^\/+/, "");
 
+    const isFormData = options.body instanceof FormData;
     const config = {
         ...restOptions,
         headers: {
-            "Content-Type": "application/json",
+            ...(!isFormData && { "Content-Type": "application/json" }),
             ...(token && {
                 Authorization: `Bearer ${token}`
             }),
             ...headers
         }
     };
-
+    
     const response = await fetch(
         `${normalizedBaseUrl}/${normalizedUrl}`,
         config

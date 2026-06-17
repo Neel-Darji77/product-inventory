@@ -11,7 +11,7 @@ import ProductList from "../components/ProductList";
 import LoadingSkeleton from "../components/LoadingSkeleton";
 import EmptyState from "../components/EmptyState";
 import DeleteModal from "../components/DeleteModel";
-import UpdateStockModal from "../components/UpdateStockModel";
+import EditProductModal from "../components/EditProductModal";
 
 import api from "../utils/api";
 
@@ -56,7 +56,7 @@ function Dashboard() {
     loadDashboard();
   }, [loadDashboard]);
 
-  async function handleAdd(name, price, category, stock) {
+  async function handleAdd(name, price, category, stock, description = "", image = "") {
     try {
       const newProduct = await api("api/products", {
         method: "POST",
@@ -65,6 +65,8 @@ function Dashboard() {
           price: Number(price),
           category,
           stock: Number(stock),
+          description,
+          image,
         }),
       });
 
@@ -96,19 +98,17 @@ function Dashboard() {
     }
   }
 
-  async function handleUpdateStock(id, stock) {
+  async function handleUpdateProduct(id, updatedFields) {
     try {
-      await api(`api/products/${id}/stock`, {
+      await api(`api/products/${id}`, {
         method: "PATCH",
-        body: JSON.stringify({
-          stock,
-        }),
+        body: JSON.stringify(updatedFields),
       });
 
       await fetchProducts();
       await fetchStats();
 
-      toast.success("Stock Updated");
+      toast.success("Product Updated");
     } catch {
       toast.error("Update failed");
     }
@@ -250,14 +250,14 @@ function Dashboard() {
         }}
         onConfirm={handleDelete}
       />
-      <UpdateStockModal
+      <EditProductModal
         open={updateOpen}
         product={selectedProduct}
         onClose={() => {
           setUpdateOpen(false);
           setSelectedProduct(null);
         }}
-        onSave={handleUpdateStock}
+        onSave={handleUpdateProduct}
       />
     </motion.div>
   );
