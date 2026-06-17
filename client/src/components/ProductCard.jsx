@@ -91,7 +91,7 @@ function ProductCard({
     >
       {/* Product Image Cover */}
       {product.image ? (
-        <div className="w-full h-40 rounded-2xl overflow-hidden mb-4 border border-gray-100 dark:border-slate-800 bg-gray-50 dark:bg-slate-800/40 relative">
+        <div className="w-full aspect-square rounded-2xl overflow-hidden mb-4 border border-gray-100 dark:border-slate-800 bg-gray-50 dark:bg-slate-800/40 relative">
           <img
             src={product.image}
             alt={product.name}
@@ -99,7 +99,7 @@ function ProductCard({
           />
         </div>
       ) : (
-        <div className="w-full h-40 rounded-2xl overflow-hidden mb-4 border border-gray-100 dark:border-slate-800 bg-gradient-to-br from-green-50 to-green-100/30 dark:from-slate-800/40 dark:to-slate-850/20 flex items-center justify-center">
+        <div className="w-full aspect-square rounded-2xl overflow-hidden mb-4 border border-gray-100 dark:border-slate-800 bg-gradient-to-br from-green-50 to-green-100/30 dark:from-slate-800/40 dark:to-slate-850/20 flex items-center justify-center">
           <Package
             size={36}
             className="text-green-500/70 dark:text-green-400/50"
