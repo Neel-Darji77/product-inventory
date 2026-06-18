@@ -31,7 +31,7 @@ const Sidebar = () => {
         }`;
 
     return (
-        <aside className="flex h-screen w-72 flex-col border-r border-gray-200 bg-white dark:bg-slate-900 dark:border-slate-800">
+        <aside className="sticky top-0 flex h-screen w-72 flex-col border-r border-gray-200 bg-white dark:bg-slate-900 dark:border-slate-800">
             <div className="border-b border-gray-200 p-6 dark:border-slate-800">
                 <h1 className="text-xl font-bold text-green-600 dark:text-green-400 truncate animate-pulse-once" title={settings?.companyName}>
                     {settings?.companyName || "Inventory"}
